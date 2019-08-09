@@ -8,18 +8,18 @@ class Game
     @matrix = [["_", "_", "_"], ["_", "_", "_"], ["_", "_", "_"]]
     @players = []
     @active_player = 0
-    @counter=0
+    @counter = 0
     @winner = nil
   end
   
   def get_matrix
-    result = ""
+    result = ''
     matrix.length.times { |n| result += "#{matrix[n].join(' ')}\n" }
     result
   end
   
   def switch_active_player
-    @active_player = @active_player == 0 ? 1 : 0 
+    @active_player = @active_player.zero? ? 1 : 0 
   end
   
   def get_active_player
@@ -35,7 +35,7 @@ class Game
     else
       switch_active_player
     end
-    @counter+=1
+    @counter += 1
     true
   end
   
@@ -52,12 +52,12 @@ class Game
   
   def check_move
     if (( matrix[0][0] != "_" && matrix[0][0] == matrix[1][1] && matrix[1][1] == matrix[2][2]) ||
-      (matrix[0][2] != "_" && matrix[0][2]== matrix[1][1] && matrix[1][1]== matrix[2][0] ))
+      (matrix[0][2] != "_" && matrix[0][2] == matrix[1][1] && matrix[1][1] == matrix[2][0] ))
       return true
     end
     3.times do |x|
-      if ((matrix[x][0]!="_" && matrix[x][0]== matrix[x][1] && matrix[x][1]== matrix[x][2] ) ||
-          (matrix[0][x]!="_" && matrix[0][x]== matrix[1][x] && matrix[1][x]== matrix[2][x]))
+      if ((matrix[x][0] !="_" && matrix[x][0] == matrix[x][1] && matrix[x][1] == matrix[x][2] ) ||
+          (matrix[0][x] !="_" && matrix[0][x] == matrix[1][x] && matrix[1][x] == matrix[2][x]))
         return true
       end
     end
