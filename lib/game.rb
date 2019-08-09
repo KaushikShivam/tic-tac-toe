@@ -7,6 +7,7 @@ class Game
     @matrix = [["_", "_", "_"], ["_", "_", "_"], ["_", "_", "_"]]
     @players = []
     @active_player = 0
+    @counter=0
   end
   def get_matrix
     result = ""
@@ -23,9 +24,28 @@ class Game
   end
   
   def update_matrix(row, column)
+    return false if matrix[row - 1][column - 1] != "_"
     matrix[row - 1][column - 1] = get_active_player.symbol
     switch_active_player
+    @counter+=1
+    true
   end
-  
-  
+  def is_finished?
+    (@counter==9) 
+  end
+  def check_move
+    if (( matrix[0][0] != "_" && matrix[0][0] == matrix[1][1] && matrix[1][1] == matrix[2][2]) ||
+      (matrix[0][2] != "_" && matrix[0][2]== matrix[1][1] && matrix[1][1]== matrix[2][0] ))
+      return true
+    end
+    3.times do |x|
+      if ((matrix[x][0]!="_" && matrix[x][0]== matrix[x][1] && matrix[x][1]== matrix[x][2] ) ||
+          (matrix[0][x]!="_" && matrix[0][x]== matrix[1][x] && matrix[1][x]== matrix[2][x]))
+        return true
+      end
+    end
+    false
+
+  end
+    
 end

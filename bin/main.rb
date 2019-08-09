@@ -27,14 +27,18 @@ game.players.push(player_1, player_2)
 game_running = true
 puts game.active_player
 
-while game_running
+while not game.is_finished?
   puts "(player#{game.active_player + 1}) Input a number from 1-3 to select the row"
   row = gets.chomp.to_i
   puts "(player#{game.active_player + 1}) Input a number from 1-3 to select the column"
   column = gets.chomp.to_i
-  
-  game.update_matrix(row, column)
-  
+
+  unless game.update_matrix(row, column)
+    puts "The cell you have selected is already used!".bg_red
+    puts "Please select another cell."
+  end
   puts game.get_matrix
   
+  puts "There is a winner" if game.check_move
+
 end
