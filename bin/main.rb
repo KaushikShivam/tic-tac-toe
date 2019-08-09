@@ -47,7 +47,6 @@ def start_game
     end
     column = column.to_i
     
-
     unless game.update_matrix(row, column)
       puts "The cell you have selected is already used!".bg_red
       puts "Please select another cell."
@@ -55,12 +54,16 @@ def start_game
     puts game.get_matrix
     
     if game.is_finished? == 1 
-      puts "Player #{game.winner + 1} Won!"
+      puts "Player #{game.winner + 1} Won!".bg_green
     elsif game.is_finished? == -1
-      puts "No one won!"
-    end
-    
+      puts "No one won!".bg_blue
+    end    
   end
 end
 
-start_game
+while true
+  start_game
+  puts "Do you want to start another game ?[Y/N](default N)"
+  answer = gets.chomp.downcase
+  break if answer!="y" 
+end

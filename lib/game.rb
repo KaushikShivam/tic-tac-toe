@@ -11,6 +11,7 @@ class Game
     @counter=0
     @winner = nil
   end
+  
   def get_matrix
     result = ""
     matrix.length.times { |n| result += "#{matrix[n].join(' ')}\n" }
@@ -62,7 +63,5 @@ class Game
     end
     false
   end
-  
-  
   
 end
