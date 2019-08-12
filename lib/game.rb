@@ -21,6 +21,7 @@ class Game
 
   def switch_active_player
     self.active_player = active_player.zero? ? 1 : 0
+
   end
 
   def find_active_player
@@ -69,6 +70,7 @@ class Game
       matrix[0][2] == matrix[1][1] &&
       matrix[1][1] == matrix[2][0]
     )
+
       return true
     end
 
