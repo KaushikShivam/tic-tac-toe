@@ -6,7 +6,7 @@ class Game
   attr_accessor :counter
 
   def initialize
-    @matrix = [['_','_','_'], ['_','_','_'], ['_','_','_']]
+    @matrix = [%w[_ _ _], %w[_ _ _], %w[_ _ _]]
     @players = []
     @active_player = 0
     @counter = 0
@@ -37,7 +37,7 @@ class Game
     end
   end
 
-  def handle_move 
+  def handle_move
     if check_move
       self.winner = active_player
     else
@@ -45,7 +45,7 @@ class Game
     end
   end
 
-  def slot_taken?(row,column)
+  def slot_taken?(row, column)
     matrix[row - 1][column - 1] != '_'
   end
 
@@ -62,7 +62,7 @@ class Game
   end
 
   def check_diagonal
-    if (
+    is_diagonal = (
       matrix[0][0] != '_' &&
       matrix[0][0] == matrix[1][1] &&
       matrix[1][1] == matrix[2][2]
@@ -71,11 +71,7 @@ class Game
       matrix[0][2] == matrix[1][1] &&
       matrix[1][1] == matrix[2][0]
     )
-
-      return true
-    end
-
-    false
+    is_diagonal
   end
 
   def check_vertical

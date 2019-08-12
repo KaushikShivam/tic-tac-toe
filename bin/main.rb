@@ -13,7 +13,7 @@ def start_game
   puts 'To play, Please provide the following inputs'
   # Validating user inputs
   input = nil
-  until input == 'x' || input == 'o'
+  until input.eql?('x') || input.eql?('o')
     puts 'Please enter either x or o'
     input = gets.chomp.downcase
   end
@@ -29,7 +29,8 @@ def start_game
     row = nil
     while true
       row = gets.chomp
-      break if ('1'..'3').include?(row) 
+      break if ('1'..'3').include?(row)
+
       puts "(player#{game.active_player + 1}) Oops! You've made a mistake. Please enter a valid number between 1-3"
     end
     row = row.to_i
