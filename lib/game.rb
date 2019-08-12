@@ -28,28 +28,32 @@ class Game
   end
 
   def update_matrix(row, column)
-    return false if matrix[row - 1][column - 1] != '_'
-
-    matrix[row - 1][column - 1] = find_active_player.symbol
+    if slot_taken?(row,column)
+      return false
+    else
+      matrix[row - 1][column - 1] = find_active_player.symbol
+      self.counter += 1
+      return true
+    end
+  end
+  def handle_move 
     if check_move
       self.winner = active_player
     else
       switch_active_player
     end
-    self.counter += 1
-    true
+  end
+  def slot_taken?(row,column)
+    matrix[row - 1][column - 1] != '_'
   end
 
   def finished?
-    if winner
-      1
-    elsif counter == 9
-      -1
-    else
-      0
-    end
+    winner || drawn?
   end
-
+  
+  def drawn?
+    counter == 9
+  end
   def check_move
     check_diagonal || check_horizontal || check_vertical
   end

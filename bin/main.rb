@@ -24,8 +24,7 @@ def start_game
   player_2 = Player.new(input == 'x' ? 'o' : 'x')
 
   game.players.push(player_1, player_2)
-
-  while game.finished? == 0
+  while not game.finished?
     puts "(player#{game.active_player + 1}) Input a number from 1-3 to select the row"
     row = nil
     while true
@@ -47,13 +46,17 @@ def start_game
     unless game.update_matrix(row, column)
       puts "The cell you have selected is already used!".bg_red
       puts "Please select another cell."
+    else
+      game.handle_move
     end
     puts game.display_matrix
     
-    if game.finished? == 1 
-      puts "Player #{game.winner + 1} Won!".bg_green
-    elsif game.finished? == -1
-      puts "No one won!".bg_blue
+    if game.finished? 
+      if game.winner
+        puts "Player #{game.winner + 1} Won!".bg_green
+      else
+        puts "No one won!".bg_blue
+      end
     end    
   end
 end
