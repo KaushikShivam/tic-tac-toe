@@ -20,20 +20,20 @@ def start_game
   puts "You've selected: #{input.upcase}"
 
   # Initialise the players
-  player_1 = Player.new(input)
-  player_2 = Player.new(input == 'x' ? 'o' : 'x')
+  player_one = Player.new(input)
+  player_two = Player.new(input == 'x' ? 'o' : 'x')
 
-  game.players.push(player_1, player_2)
-  while not game.finished?
+  game.players.push(player_one, player_two)
+  until game.finished?
     puts "(player#{game.active_player + 1}) Input a number from 1-3 to select the row"
     row = nil
     while true
       row = gets.chomp
-      break if ("1".."3").include?(row) 
+      break if ('1'..'3').include?(row) 
       puts "(player#{game.active_player + 1}) Oops! You've made a mistake. Please enter a valid number between 1-3"
     end
     row = row.to_i
-    
+
     puts "(player#{game.active_player + 1}) Input a number from 1-3 to select the column"
     column = nil
     while true
@@ -42,7 +42,7 @@ def start_game
       puts "(player#{game.active_player + 1}) Oops! You've made a mistake. Please enter a valid number between 1-3"
     end
     column = column.to_i
-    
+
     unless game.update_matrix(row, column)
       puts "The cell you have selected is already used!".bg_red
       puts "Please select another cell."
@@ -50,14 +50,14 @@ def start_game
       game.handle_move
     end
     puts game.display_matrix
-    
-    if game.finished? 
+
+    if game.finished?
       if game.winner
         puts "Player #{game.winner + 1} Won!".bg_green
       else
-        puts "No one won!".bg_blue
+        puts 'No one won!'.bg_blue
       end
-    end    
+    end
   end
 end
 
