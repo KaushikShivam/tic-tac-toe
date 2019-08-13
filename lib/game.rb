@@ -2,66 +2,96 @@ class Game
   attr_accessor :matrix
   attr_accessor :players
   attr_accessor :active_player
-  attr_reader :winner
-  
+  attr_accessor :winner
+  attr_accessor :counter
+
   def initialize
-    @matrix = [["_", "_", "_"], ["_", "_", "_"], ["_", "_", "_"]]
+    @matrix = [%w[_ _ _], %w[_ _ _], %w[_ _ _]]
     @players = []
     @active_player = 0
     @counter = 0
     @winner = nil
   end
-  
-  def get_matrix
+
+  def display_matrix
     result = ''
     matrix.length.times { |n| result += "#{matrix[n].join(' ')}\n" }
     result
   end
-  
+
   def switch_active_player
-    @active_player = @active_player.zero? ? 1 : 0 
+    self.active_player = active_player.zero? ? 1 : 0
   end
-  
-  def get_active_player
-    active_player == 0 ? players[0] : players[1]
+
+  def find_active_player
+    active_player.zero? ? players[0] : players[1]
   end
-  
+
   def update_matrix(row, column)
-    return false if matrix[row - 1][column - 1] != "_"
-    matrix[row - 1][column - 1] = get_active_player.symbol
-    
+    if slot_taken?(row, column)
+      false
+    else
+      matrix[row - 1][column - 1] = find_active_player.symbol
+      self.counter += 1
+      true
+    end
+  end
+
+  def handle_move
     if check_move
-      @winner = @active_player
+      self.winner = active_player
     else
       switch_active_player
     end
-    @counter += 1
-    true
   end
-  
-  def is_finished?
-    if @winner
-      return 1
-    elsif @counter == 9
-      return -1
-    else
-      return 0
-    end
-  
+
+  def slot_taken?(row, column)
+    matrix[row - 1][column - 1] != '_'
   end
-  
+
+  def finished?
+    winner || drawn?
+  end
+
+  def drawn?
+    counter == 9
+  end
+
   def check_move
-    if (( matrix[0][0] != "_" && matrix[0][0] == matrix[1][1] && matrix[1][1] == matrix[2][2]) ||
-      (matrix[0][2] != "_" && matrix[0][2] == matrix[1][1] && matrix[1][1] == matrix[2][0] ))
-      return true
-    end
+    check_diagonal || check_horizontal || check_vertical
+  end
+
+  def check_diagonal
+    is_diagonal = (
+      matrix[0][0] != '_' &&
+      matrix[0][0] == matrix[1][1] &&
+      matrix[1][1] == matrix[2][2]
+    ) || (
+      matrix[0][2] != '_' &&
+      matrix[0][2] == matrix[1][1] &&
+      matrix[1][1] == matrix[2][0]
+    )
+    is_diagonal
+  end
+
+  def check_vertical
     3.times do |x|
-      if ((matrix[x][0] !="_" && matrix[x][0] == matrix[x][1] && matrix[x][1] == matrix[x][2] ) ||
-          (matrix[0][x] !="_" && matrix[0][x] == matrix[1][x] && matrix[1][x] == matrix[2][x]))
+      if matrix[x][0] != '_' && matrix[x][0] == matrix[x][1] &&
+         matrix[x][1] == matrix[x][2]
         return true
       end
     end
     false
   end
-  
+
+  def check_horizontal
+    3.times do |x|
+      if matrix[0][x] != '_' && matrix[0][x] == matrix[1][x] &&
+         matrix[1][x] == matrix[2][x]
+        return true
+      end
+    end
+    false
+  end
+
 end
