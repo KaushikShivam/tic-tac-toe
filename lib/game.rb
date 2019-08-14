@@ -1,3 +1,4 @@
+# Defines a Class Game which holds all the logic for game and steps
 class Game 
   attr_accessor :matrix
   attr_accessor :players
