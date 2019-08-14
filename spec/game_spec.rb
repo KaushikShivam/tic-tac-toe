@@ -114,19 +114,35 @@ RSpec.describe Game do
         end
       end
     end
-  end
 
-  it 'should return true if a slot is taken' do
-    allow(game).to receive(:matrix).and_return([%w[_ x _], %w[_ _ _], %w[_ _ _]])
-    (1..3).each do |row|
-      (1..3).each do |col|
-        if row == 1 && col == 2 
-          expect(game.slot_taken?(row, col)).to eql(true)
-        else
-          expect(game.slot_taken?(row, col)).to eql(false)
+    it 'should return true if a slot is taken' do
+      allow(game).to receive(:matrix).and_return([%w[_ x _], %w[_ _ _], %w[_ _ _]])
+      (1..3).each do |row|
+        (1..3).each do |col|
+          if row == 1 && col == 2 
+            expect(game.slot_taken?(row, col)).to eql(true)
+          else
+            expect(game.slot_taken?(row, col)).to eql(false)
+          end
         end
       end
-    end
+    end      
   end
 
+  describe '#handle_move' do
+   it 'should update the winner if check_move return true' do
+    allow(game).to receive_messages(check_move:true,active_player:0)
+    expect(game.winner).to eql(nil)
+    game.handle_move
+    expect(game.winner).to eql(0)
+   end
+   
+   it 'should change the active player if check_move return false' do
+    allow(game).to receive_messages(check_move:false)
+    game.active_player=0
+    expect(game.active_player).to eql(0)
+    game.handle_move
+    expect(game.active_player).to eql(1)
+   end
+  end
 end
