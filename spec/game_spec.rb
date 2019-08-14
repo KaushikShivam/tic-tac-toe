@@ -72,4 +72,24 @@ RSpec.describe Game do
       expect(game.check_horizontal).to eql(false)
     end
   end
+
+  describe '#finished?' do
+    it 'should not return false if the winner is not nil or if drawn is true' do
+      allow(game).to receive_messages(winner: 1, drawn?: true)
+      expect(game.finished?).to_not eql(false)
+    end
+    it 'should not return false if the winner is 1 & drawn is false' do
+      allow(game).to receive_messages(winner: 1, drawn?: false)
+      expect(game.finished?).to_not eql(false)
+    end
+    it 'should return false if the winner is nil & if drawn is false' do
+      allow(game).to receive_messages(winner: nil, drawn?: false)
+      expect(game.finished?).to eql(false)
+    end
+    it 'should return true if the winner is nil & drawn is true' do
+      allow(game).to receive_messages(winner: nil, drawn?: true)
+      expect(game.finished?).to eql(true)
+    end
+  end
+  
 end
