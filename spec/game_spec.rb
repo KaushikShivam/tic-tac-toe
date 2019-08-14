@@ -134,7 +134,7 @@ RSpec.describe Game do
         .and_return([%w[_ x _], %w[_ _ _], %w[_ _ _]])
       (1..3).each do |row|
         (1..3).each do |col|
-          if row == 1 && col == 2 
+          if row == 1 && col == 2
             expect(game.slot_taken?(row, col)).to eql(true)
           else
             expect(game.slot_taken?(row, col)).to eql(false)
@@ -210,7 +210,7 @@ RSpec.describe Game do
 
   describe '#display_matrix' do
     it 'should return the matrix as a string' do
-      game.matrix=[%w[x x x], %w[o _ o], %w[o _ _]]
+      game.matrix = [%w[x x x], %w[o _ o], %w[o _ _]]
       expect(game.display_matrix).to eql("x x x\no _ o\no _ _\n")
     end
   end
