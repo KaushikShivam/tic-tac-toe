@@ -1,7 +1,7 @@
 require './lib/game.rb'
 
 RSpec.describe Game do
-  let(:game){ Game.new }
+  let(:game) { Game.new }
 
   describe '#check_move' do
     it 'should return true if either of the methods return true' do
@@ -20,55 +20,66 @@ RSpec.describe Game do
   end
   describe '#check_diagonal' do
     it 'should return true if the slots match diagonaly from left' do
-      allow(game).to receive(:matrix).and_return([%w[x _ o], %w[_ x o], %w[_ _ x]])
+      allow(game).to receive(:matrix)
+        .and_return([%w[x _ o], %w[_ x o], %w[_ _ x]])
       expect(game.check_diagonal).to eql(true)
     end
 
-    it 'should return true if the slots match diagonaly from right' do
-      allow(game).to receive(:matrix).and_return([%w[o _ x], %w[_ x o], %w[x _ _]])
+    it 'should return true if slots match diagonaly from right' do
+      allow(game).to receive(:matrix)
+        .and_return([%w[o _ x], %w[_ x o], %w[x _ _]])
       expect(game.check_diagonal).to eql(true)
     end
 
     it 'should return false if the slots don\'t match diagonaly' do
-      allow(game).to receive(:matrix).and_return([%w[o _ x], %w[_ x o], %w[_ x _]])
+      allow(game).to receive(:matrix)
+        .and_return([%w[o _ x], %w[_ x o], %w[_ x _]])
       expect(game.check_diagonal).to eql(false)
     end
   end
 
   describe '#check_vertical' do
     it 'should return true if the slots match vertically from first column' do
-      allow(game).to receive(:matrix).and_return([%w[x _ o], %w[x _ o], %w[x _ _]])
+      allow(game).to receive(:matrix)
+        .and_return([%w[x _ o], %w[x _ o], %w[x _ _]])
       expect(game.check_vertical).to eql(true)
     end
     it 'should return true if the slots match vertically from second column' do
-      allow(game).to receive(:matrix).and_return([%w[_ x o], %w[o x o], %w[_ x _]])
+      allow(game).to receive(:matrix)
+        .and_return([%w[_ x o], %w[o x o], %w[_ x _]])
       expect(game.check_vertical).to eql(true)
     end
     it 'should return true if the slots match vertically from third column' do
-      allow(game).to receive(:matrix).and_return([%w[x _ o], %w[_ _ o], %w[x _ o]])
+      allow(game).to receive(:matrix)
+        .and_return([%w[x _ o], %w[_ _ o], %w[x _ o]])
       expect(game.check_vertical).to eql(true)
     end
-    it 'should return false if the slots don\'t match vertically from any columns' do
-      allow(game).to receive(:matrix).and_return([%w[x _ _], %w[x _ o], %w[_ _ o]])
+    it 'should return false if slots don\'t match vertically' do
+      allow(game).to receive(:matrix)
+        .and_return([%w[x _ _], %w[x _ o], %w[_ _ o]])
       expect(game.check_vertical).to eql(false)
     end
   end
 
   describe '#check_horizontal' do
     it 'should return true if the slots match horizontally from first row' do
-      allow(game).to receive(:matrix).and_return([%w[x x x], %w[o _ o], %w[o _ _]])
+      allow(game).to receive(:matrix)
+        .and_return([%w[x x x], %w[o _ o], %w[o _ _]])
       expect(game.check_horizontal).to eql(true)
     end
     it 'should return true if the slots match horizontally from second row' do
-      allow(game).to receive(:matrix).and_return([%w[_ o o], %w[x x x], %w[_ o _]])
+      allow(game).to receive(:matrix)
+        .and_return([%w[_ o o], %w[x x x], %w[_ o _]])
       expect(game.check_horizontal).to eql(true)
     end
     it 'should return true if the slots match horizontally from third row' do
-      allow(game).to receive(:matrix).and_return([%w[o _ o], %w[_ _ o], %w[x x x]])
+      allow(game).to receive(:matrix)
+        .and_return([%w[o _ o], %w[_ _ o], %w[x x x]])
       expect(game.check_horizontal).to eql(true)
     end
-    it 'should return false if the slots don\'t match horizontally from any row' do
-      allow(game).to receive(:matrix).and_return([%w[x _ _], %w[x _ o], %w[_ _ o]])
+    it 'should return false if slots don\'t match horizontally from any row' do
+      allow(game).to receive(:matrix)
+        .and_return([%w[x _ _], %w[x _ o], %w[_ _ o]])
       expect(game.check_horizontal).to eql(false)
     end
   end
@@ -107,7 +118,8 @@ RSpec.describe Game do
 
   describe '#slot_taken?' do
     it 'should return false if no slot is taken' do
-      allow(game).to receive(:matrix).and_return([%w[_ _ _], %w[_ _ _], %w[_ _ _]])
+      allow(game).to receive(:matrix)
+        .and_return([%w[_ _ _], %w[_ _ _], %w[_ _ _]])
       (1..3).each do |row|
         (1..3).each do |col|
           expect(game.slot_taken?(row, col)).to eql(false)
@@ -116,7 +128,8 @@ RSpec.describe Game do
     end
 
     it 'should return true if a slot is taken' do
-      allow(game).to receive(:matrix).and_return([%w[_ x _], %w[_ _ _], %w[_ _ _]])
+      allow(game).to receive(:matrix)
+        .and_return([%w[_ x _], %w[_ _ _], %w[_ _ _]])
       (1..3).each do |row|
         (1..3).each do |col|
           if row == 1 && col == 2 
@@ -126,24 +139,24 @@ RSpec.describe Game do
           end
         end
       end
-    end      
+    end
   end
 
   describe '#handle_move' do
-   it 'should update the winner if check_move return true' do
-    allow(game).to receive_messages(check_move:true,active_player:0)
-    expect(game.winner).to eql(nil)
-    game.handle_move
-    expect(game.winner).to eql(0)
-   end
+    it 'should update the winner if check_move return true' do
+      allow(game).to receive_messages(check_move: true, active_player: 0)
+      expect(game.winner).to eql(nil)
+      game.handle_move
+      expect(game.winner).to eql(0)
+    end
 
-   it 'should change the active player if check_move return false' do
-    allow(game).to receive_messages(check_move:false)
-    game.active_player=0
-    expect(game.active_player).to eql(0)
-    game.handle_move
-    expect(game.active_player).to eql(1)
-   end
+    it 'should change the active player if check_move return false' do
+      allow(game).to receive_messages(check_move: false)
+      game.active_player = 0
+      expect(game.active_player).to eql(0)
+      game.handle_move
+      expect(game.active_player).to eql(1)
+    end
   end
 
   describe '#update_matrix' do
@@ -154,31 +167,43 @@ RSpec.describe Game do
     end
     it 'should return true if slot_taken? returns false' do
       allow(player).to receive('symbol').and_return('x')
-      allow(game).to receive_messages(slot_taken?: false, find_active_player: player)
+      allow(game)
+        .to receive_messages(slot_taken?: false, find_active_player: player)
       expect(game.update_matrix(2, 2)).to eql(true)
     end
     it 'should increment count if slot_taken? returns false' do
       allow(player).to receive('symbol').and_return('x')
-      allow(game).to receive_messages(slot_taken?: false, find_active_player: player)
+      allow(game)
+        .to receive_messages(slot_taken?: false, find_active_player: player)
       game.counter = 0
       game.update_matrix(2, 2)
       expect(game.counter).to eql(1)
     end
     it 'should update matrix if slot_taken? returns false' do
       allow(player).to receive('symbol').and_return('x')
-      allow(game).to receive_messages(slot_taken?: false, find_active_player: player)
+      allow(game)
+        .to receive_messages(slot_taken?: false, find_active_player: player)
       game.matrix = [%w[_ o _], %w[_ _ _], %w[_ _ _]]
       game.update_matrix(2, 2)
       expect(game.matrix).to eq([%w[_ o _], %w[_ x _], %w[_ _ _]])
     end
   end
-  
+
   describe '#find_active_player' do
     it 'should return the active player object' do
-      players=[double('player1'),double('player2')]
-      game.players=players
-      game.active_player=0
+      players = [double('player1'), double('player2')]
+      game.players = players
+      game.active_player = 0
       expect(game.find_active_player).to eql(players[0])
     end
   end
+
+  describe '#switch_active_player' do
+    it 'should switch the active player object' do
+      game.active_player = 0
+      game.switch_active_player
+      expect(game.active_player).to eql(1)
+    end
+  end
+
 end
