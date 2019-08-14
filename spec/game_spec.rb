@@ -136,7 +136,7 @@ RSpec.describe Game do
     game.handle_move
     expect(game.winner).to eql(0)
    end
-   
+
    it 'should change the active player if check_move return false' do
     allow(game).to receive_messages(check_move:false)
     game.active_player=0
@@ -173,4 +173,12 @@ RSpec.describe Game do
     end
   end
   
+  describe '#find_active_player' do
+    it 'should return the active player object' do
+      players=[double('player1'),double('player2')]
+      game.players=players
+      game.active_player=0
+      expect(game.find_active_player).to eql(players[0])
+    end
+  end
 end
