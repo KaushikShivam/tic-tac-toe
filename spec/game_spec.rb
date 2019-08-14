@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './lib/game.rb'
 
 RSpec.describe Game do
@@ -213,4 +215,21 @@ RSpec.describe Game do
     end
   end
 
+  describe '#initialize' do
+    it 'should return a matrix variable' do
+      expect(game.matrix).to eql([%w[_ _ _], %w[_ _ _], %w[_ _ _]])
+    end
+    it 'should return an empty players array' do
+      expect(game.players).to eql([])
+    end
+    it 'should set 0 for the active player' do
+      expect(game.active_player).to eql(0)
+    end
+    it 'should set 0 for the counter' do
+      expect(game.counter).to eql(0)
+    end
+    it 'should set winner to nil' do
+      expect(game.winner).to eql(nil)
+    end
+  end
 end

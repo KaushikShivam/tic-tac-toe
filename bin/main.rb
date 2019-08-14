@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require '../lib/user_interface'
 require '../lib/game'

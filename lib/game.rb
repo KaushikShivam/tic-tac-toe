@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 # Defines a Class Game which holds all the logic for game and steps
-class Game 
+class Game
   attr_accessor :matrix
   attr_accessor :players
   attr_accessor :active_player
@@ -94,5 +96,4 @@ class Game
     end
     false
   end
-
 end
