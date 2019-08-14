@@ -206,4 +206,11 @@ RSpec.describe Game do
     end
   end
 
+  describe '#display_matrix' do
+    it 'should return the matrix as a string' do
+      game.matrix=[%w[x x x], %w[o _ o], %w[o _ _]]
+      expect(game.display_matrix).to eql("x x x\no _ o\no _ _\n")
+    end
+  end
+
 end
