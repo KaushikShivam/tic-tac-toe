@@ -34,7 +34,7 @@ RSpec.describe Game do
       expect(game.check_diagonal).to eql(false)
     end
   end
-  
+
   describe '#check_vertical' do
     it 'should return true if the slots match vertically from first column' do
       allow(game).to receive(:matrix).and_return([%w[x _ o], %w[x _ o], %w[x _ _]])
@@ -92,16 +92,41 @@ RSpec.describe Game do
     end
   end
 
-  describe "#drawn?" do
-    it 'should return true if the move counter is equal to 9' do 
+  describe '#drawn?' do
+    it 'should return true if the move counter is equal to 9' do
       allow(game).to receive(:counter).and_return(9)
       expect(game.drawn?).to eql(true)
     end
-    it 'should return false if the move counter is smaller than 9' do 
+    it 'should return false if the move counter is smaller than 9' do
       9.times do |x|
         allow(game).to receive(:counter).and_return(x)
         expect(game.drawn?).to eql(false)
       end
     end
   end
+
+  describe '#slot_taken?' do
+    it 'should return false if no slot is taken' do
+      allow(game).to receive(:matrix).and_return([%w[_ _ _], %w[_ _ _], %w[_ _ _]])
+      (1..3).each do |row|
+        (1..3).each do |col|
+          expect(game.slot_taken?(row, col)).to eql(false)
+        end
+      end
+    end
+  end
+
+  it 'should return true if a slot is taken' do
+    allow(game).to receive(:matrix).and_return([%w[_ x _], %w[_ _ _], %w[_ _ _]])
+    (1..3).each do |row|
+      (1..3).each do |col|
+        if row == 1 && col == 2 
+          expect(game.slot_taken?(row, col)).to eql(true)
+        else
+          expect(game.slot_taken?(row, col)).to eql(false)
+        end
+      end
+    end
+  end
+
 end
