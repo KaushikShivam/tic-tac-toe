@@ -29,11 +29,29 @@ RSpec.describe Game do
       expect(game.check_diagonal).to eql(true)
     end
 
-    it 'should return false if the slot don\'t match diagonaly' do
+    it 'should return false if the slots don\'t match diagonaly' do
       allow(game).to receive(:matrix).and_return([%w[o _ x], %w[_ x o], %w[_ x _]])
       expect(game.check_diagonal).to eql(false)
     end
-    
   end
+  
+  describe '#check_vertical' do
+    it 'should return true if the slots match vertically from first column' do
+      allow(game).to receive(:matrix).and_return([%w[x _ o], %w[x _ o], %w[x _ _]])
+      expect(game.check_vertical).to eql(true)
+    end
+    it 'should return true if the slots match vertically from second column' do
+      allow(game).to receive(:matrix).and_return([%w[_ x o], %w[o x o], %w[_ x _]])
+      expect(game.check_vertical).to eql(true)
+    end
+    it 'should return true if the slots match vertically from third column' do
+      allow(game).to receive(:matrix).and_return([%w[x _ o], %w[_ _ o], %w[x _ o]])
+      expect(game.check_vertical).to eql(true)
+    end
+    it 'should return false if the slots don\'t match vertically from any columns' do
+      allow(game).to receive(:matrix).and_return([%w[x _ _], %w[x _ o], %w[_ _ o]])
+      expect(game.check_vertical).to eql(false)
+    end
+  end
+  
 end
-

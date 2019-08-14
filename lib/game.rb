@@ -75,7 +75,7 @@ class Game
     is_diagonal
   end
 
-  def check_vertical
+  def check_horizontal
     3.times do |x|
       if matrix[x][0] != '_' && matrix[x][0] == matrix[x][1] &&
          matrix[x][1] == matrix[x][2]
@@ -85,7 +85,7 @@ class Game
     false
   end
 
-  def check_horizontal
+  def check_vertical
     3.times do |x|
       if matrix[0][x] != '_' && matrix[0][x] == matrix[1][x] &&
          matrix[1][x] == matrix[2][x]
