@@ -145,4 +145,32 @@ RSpec.describe Game do
     expect(game.active_player).to eql(1)
    end
   end
+
+  describe '#update_matrix' do
+    let(:player) { double('Player') }
+    it 'should return false if slot_taken? returns true' do
+      allow(game).to receive_messages(slot_taken?: true)
+      expect(game.update_matrix(2, 2)).to eql(false)
+    end
+    it 'should return true if slot_taken? returns false' do
+      allow(player).to receive('symbol').and_return('x')
+      allow(game).to receive_messages(slot_taken?: false, find_active_player: player)
+      expect(game.update_matrix(2, 2)).to eql(true)
+    end
+    it 'should increment count if slot_taken? returns false' do
+      allow(player).to receive('symbol').and_return('x')
+      allow(game).to receive_messages(slot_taken?: false, find_active_player: player)
+      game.counter = 0
+      game.update_matrix(2, 2)
+      expect(game.counter).to eql(1)
+    end
+    it 'should update matrix if slot_taken? returns false' do
+      allow(player).to receive('symbol').and_return('x')
+      allow(game).to receive_messages(slot_taken?: false, find_active_player: player)
+      game.matrix = [%w[_ o _], %w[_ _ _], %w[_ _ _]]
+      game.update_matrix(2, 2)
+      expect(game.matrix).to eq([%w[_ o _], %w[_ x _], %w[_ _ _]])
+    end
+  end
+  
 end
