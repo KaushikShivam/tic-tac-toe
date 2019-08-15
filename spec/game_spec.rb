@@ -12,7 +12,6 @@ RSpec.describe Game do
       allow(game).to receive(:check_horizontal).and_return(true)
       expect(game.check_move).to eql(true)
     end
-
     it 'should return false if niether of the methods return true' do
       allow(game).to receive(:check_diagonal).and_return(false)
       allow(game).to receive(:check_vertical).and_return(false)
@@ -20,19 +19,18 @@ RSpec.describe Game do
       expect(game.check_move).to eql(false)
     end
   end
+
   describe '#check_diagonal' do
     it 'should return true if the slots match diagonaly from left' do
       allow(game).to receive(:matrix)
         .and_return([%w[x _ o], %w[_ x o], %w[_ _ x]])
       expect(game.check_diagonal).to eql(true)
     end
-
     it 'should return true if slots match diagonaly from right' do
       allow(game).to receive(:matrix)
         .and_return([%w[o _ x], %w[_ x o], %w[x _ _]])
       expect(game.check_diagonal).to eql(true)
     end
-
     it 'should return false if the slots don\'t match diagonaly' do
       allow(game).to receive(:matrix)
         .and_return([%w[o _ x], %w[_ x o], %w[_ x _]])
@@ -128,7 +126,6 @@ RSpec.describe Game do
         end
       end
     end
-
     it 'should return true if a slot is taken' do
       allow(game).to receive(:matrix)
         .and_return([%w[_ x _], %w[_ _ _], %w[_ _ _]])
@@ -151,7 +148,6 @@ RSpec.describe Game do
       game.handle_move
       expect(game.winner).to eql(0)
     end
-
     it 'should change the active player if check_move return false' do
       allow(game).to receive_messages(check_move: false)
       game.active_player = 0
