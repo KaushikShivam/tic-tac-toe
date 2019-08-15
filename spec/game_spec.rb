@@ -20,6 +20,7 @@ RSpec.describe Game do
       expect(game.check_move).to eql(false)
     end
   end
+
   describe '#check_diagonal' do
     it 'should return true if the slots match diagonaly from left' do
       allow(game).to receive(:matrix)
@@ -46,16 +47,19 @@ RSpec.describe Game do
         .and_return([%w[x _ o], %w[x _ o], %w[x _ _]])
       expect(game.check_vertical).to eql(true)
     end
+
     it 'should return true if the slots match vertically from second column' do
       allow(game).to receive(:matrix)
         .and_return([%w[_ x o], %w[o x o], %w[_ x _]])
       expect(game.check_vertical).to eql(true)
     end
+
     it 'should return true if the slots match vertically from third column' do
       allow(game).to receive(:matrix)
         .and_return([%w[x _ o], %w[_ _ o], %w[x _ o]])
       expect(game.check_vertical).to eql(true)
     end
+
     it 'should return false if slots don\'t match vertically' do
       allow(game).to receive(:matrix)
         .and_return([%w[x _ _], %w[x _ o], %w[_ _ o]])
@@ -69,16 +73,19 @@ RSpec.describe Game do
         .and_return([%w[x x x], %w[o _ o], %w[o _ _]])
       expect(game.check_horizontal).to eql(true)
     end
+
     it 'should return true if the slots match horizontally from second row' do
       allow(game).to receive(:matrix)
         .and_return([%w[_ o o], %w[x x x], %w[_ o _]])
       expect(game.check_horizontal).to eql(true)
     end
+
     it 'should return true if the slots match horizontally from third row' do
       allow(game).to receive(:matrix)
         .and_return([%w[o _ o], %w[_ _ o], %w[x x x]])
       expect(game.check_horizontal).to eql(true)
     end
+
     it 'should return false if slots don\'t match horizontally from any row' do
       allow(game).to receive(:matrix)
         .and_return([%w[x _ _], %w[x _ o], %w[_ _ o]])
@@ -91,14 +98,17 @@ RSpec.describe Game do
       allow(game).to receive_messages(winner: 1, drawn?: true)
       expect(game.finished?).to_not eql(false)
     end
+
     it 'should not return false if the winner is 1 & drawn is false' do
       allow(game).to receive_messages(winner: 1, drawn?: false)
       expect(game.finished?).to_not eql(false)
     end
+
     it 'should return false if the winner is nil & if drawn is false' do
       allow(game).to receive_messages(winner: nil, drawn?: false)
       expect(game.finished?).to eql(false)
     end
+
     it 'should return true if the winner is nil & drawn is true' do
       allow(game).to receive_messages(winner: nil, drawn?: true)
       expect(game.finished?).to eql(true)
@@ -110,6 +120,7 @@ RSpec.describe Game do
       allow(game).to receive(:counter).and_return(9)
       expect(game.drawn?).to eql(true)
     end
+
     it 'should return false if the move counter is smaller than 9' do
       9.times do |x|
         allow(game).to receive(:counter).and_return(x)
@@ -163,16 +174,19 @@ RSpec.describe Game do
 
   describe '#update_matrix' do
     let(:player) { double('Player') }
+
     it 'should return false if slot_taken? returns true' do
       allow(game).to receive_messages(slot_taken?: true)
       expect(game.update_matrix(2, 2)).to eql(false)
     end
+
     it 'should return true if slot_taken? returns false' do
       allow(player).to receive('symbol').and_return('x')
       allow(game)
         .to receive_messages(slot_taken?: false, find_active_player: player)
       expect(game.update_matrix(2, 2)).to eql(true)
     end
+
     it 'should increment count if slot_taken? returns false' do
       allow(player).to receive('symbol').and_return('x')
       allow(game)
@@ -181,6 +195,7 @@ RSpec.describe Game do
       game.update_matrix(2, 2)
       expect(game.counter).to eql(1)
     end
+
     it 'should update matrix if slot_taken? returns false' do
       allow(player).to receive('symbol').and_return('x')
       allow(game)
@@ -219,15 +234,19 @@ RSpec.describe Game do
     it 'should return a matrix variable' do
       expect(game.matrix).to eql([%w[_ _ _], %w[_ _ _], %w[_ _ _]])
     end
+
     it 'should return an empty players array' do
       expect(game.players).to eql([])
     end
+
     it 'should set 0 for the active player' do
       expect(game.active_player).to eql(0)
     end
+
     it 'should set 0 for the counter' do
       expect(game.counter).to eql(0)
     end
+
     it 'should set winner to nil' do
       expect(game.winner).to eql(nil)
     end

@@ -75,4 +75,9 @@ Game
     should set 0 for the active player
     should set 0 for the counter
     should set winner to nil
+
+Player
+  should create a Player object with a symbol x
+  should create a Player object with a symbol o
+  should raise ArgumentError if no argument is given
 ```
